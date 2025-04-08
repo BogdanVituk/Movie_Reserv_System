@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: mysql:8
+    restart: always
+    env_file:
+      - .env.stage.dev
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    contrainer_name: app
+    build:
+      context: .
+      env_file:
+        - .env.stage.dev
+      volumes:
+        - .:/app
+        - /app/node_modules
+      ports:
+        - "3000:3000"
+      depends_on:
+        - db
+      command: ["npm", "run", "start:dev"]
+
+volumes:
+  db_data:
