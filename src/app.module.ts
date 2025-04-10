@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { GenresModule } from './genres/genres.module';
 import { EmailModule } from './email/email.module';
 import { SheduleModule } from './shedule/shedule.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { SheduleModule } from './shedule/shedule.module';
     AuthModule,
     GenresModule,
     EmailModule,
-    SheduleModule
+    SheduleModule,
+    PaymentModule
   ],
   controllers: [AppController],
   providers: [AppService],

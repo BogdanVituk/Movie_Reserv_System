@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `booking` ADD COLUMN `paymentStatus` ENUM('PENDING', 'PAID', 'FAILED') NOT NULL DEFAULT 'PENDING';

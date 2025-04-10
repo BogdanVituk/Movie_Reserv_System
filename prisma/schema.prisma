@@ -69,5 +69,13 @@ model Booking {
   session   Session  @relation(fields: [sessionId], references: [id])
   seatId    Int      @unique
   seat      Seat     @relation(fields: [seatId], references: [id])
+  paymentStatus      PaymentStatus @default(PENDING)  
+  price     Float    @default(10)
   createdAt DateTime @default(now())
+}
+
+enum PaymentStatus  {
+  PENDING
+  PAID
+  FAILED
 }

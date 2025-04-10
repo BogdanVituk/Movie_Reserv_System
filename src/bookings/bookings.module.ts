@@ -8,6 +8,7 @@ import { SeatsModule } from 'src/seats/seats.module';
 @Module({
   controllers: [BookingsController],
   providers: [BookingsService, PrismaService],
-  imports: [AuthModule, SeatsModule]
+  imports: [AuthModule, SeatsModule],
+  exports: [BookingsService]
 })
 export class BookingsModule {}

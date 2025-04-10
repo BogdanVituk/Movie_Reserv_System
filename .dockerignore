@@ -3,3 +3,5 @@ npm-debug.log
 Dockerfile
 .dockerignore
 .env
+.env.stage.dev
+.env.stage.prod

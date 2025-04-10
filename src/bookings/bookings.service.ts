@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { Booking } from '@prisma/client';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Booking, PaymentStatus } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { SeatsService } from 'src/seats/seats.service';
 import { BookSeatDto } from 'src/bookings/dto/book-seat.dto';
@@ -70,4 +70,19 @@ export class BookingsService {
 
         return booking;
     }   
+
+    async updatePaymentStatus(bookingId: number, status: PaymentStatus) {
+        const booking = await this.prisma.booking.findFirst({where: {id: bookingId}})
+
+        if(!booking) {
+            throw new NotFoundException('Booking not found')
+        }
+
+        await this.prisma.booking.update({
+            where: {id: booking.id},
+            data: {
+                paymentStatus: status
+            }
+        })
+    }
 }

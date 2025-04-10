@@ -35,7 +35,8 @@
     "cross-env": "^7.0.3",
     "nodemailer": "^6.10.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "stripe": "^18.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -44,6 +45,7 @@
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
+    "@types/stripe": "^8.0.417",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
