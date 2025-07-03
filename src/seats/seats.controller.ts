@@ -5,7 +5,7 @@ import { CreateSeatDto } from './dto/create-seat.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('seats')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class SeatsController {
   constructor(private readonly seatsService: SeatsService) {}
 

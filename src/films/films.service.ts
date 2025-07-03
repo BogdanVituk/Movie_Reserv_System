@@ -54,4 +54,15 @@ export class FilmsService {
 
         return films;
     }
+
+    async getAllFilm(): Promise<Film[]> {
+        const films = await this.prisma.film.findMany()
+
+        return films
+    }
+    async getFilm(id: number): Promise<Film> {
+        const film = await this.prisma.film.findUnique({where: {id}})
+
+        return film
+    }
 }

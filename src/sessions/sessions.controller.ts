@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Param, Query } from '@nestjs/common';
 import { SessionsService } from './sessions.service';
 import { CreateSessionDto } from './dto/create-session.dto';
 import { Roles } from 'src/auth/roles-auth.decorator';
@@ -19,8 +19,22 @@ export class SessionsController {
     return this.sessionsService.createSessionWithSeats(dto);
   }
 
-  @Get()
-  getBookk() {
-    return this.sessionsService.checkSessionAndSendEmails()
+  // @Get()
+  // getBook() {
+  //   return this.sessionsService.checkSessionAndSendEmails()
+  // }
+
+  @Get('/byNameOrDate')
+  getSessionByFilmNameOrDate(
+    @Query('filmName') filmName:string,
+    @Query('date') date: string
+  ) {
+    return this.sessionsService.getSessionbyNameOrDate(filmName, date);
   }
+
+  @Get(':id')
+  getSessionByFilmId(@Param('id') id: string) {
+    return this.sessionsService.getSessionbyFilmdId(+id);
+  }
+
 }

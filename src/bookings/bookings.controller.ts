@@ -6,7 +6,7 @@ import { ApiResponse } from '@nestjs/swagger';
 import { Booking } from '@prisma/client';
 
 @Controller('bookings')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class BookingsController {
   constructor(private readonly bookingsService: BookingsService) {}
 

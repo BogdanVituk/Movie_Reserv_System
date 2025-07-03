@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Put, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Put, Param, Delete, UseGuards, Get } from '@nestjs/common';
 import { FilmsService } from './films.service';
 import { CreateFilmDto } from './dto/create-film.dto';
 import { UpdateFilmDto } from './dto/update-film.dto';
@@ -8,7 +8,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('films')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class FilmsController {
   constructor(private readonly filmsService: FilmsService) {}
 
@@ -38,5 +38,15 @@ export class FilmsController {
   @Post()
   getByDate(@Body() date: Date ): Promise<Film[]> {
     return this.filmsService.getFilmsByDate(date);
+  }
+
+  @Get()
+  getAll() {
+    return this.filmsService.getAllFilm();
+  }
+
+  @Get(':id')
+  getFilm(@Param('id') id: string): Promise<Film> {
+    return this.filmsService.getFilm(+id);
   }
 }

@@ -5,6 +5,7 @@ import  * as bcrypt from 'bcryptjs'
 import { UsersService } from 'src/users/users.service';
 import { User } from '@prisma/client';
 import { JwtService } from '@nestjs/jwt';
+import { LoginUserDto } from 'src/users/dto/login.dto';
 @Injectable()
 export class AuthService {
 
@@ -14,7 +15,7 @@ export class AuthService {
         private jwtService: JwtService
     ) {}
 
-    async login(dto: CreateUserDto) {
+    async login(dto: LoginUserDto) {
         const user: User = await this.validateUser(dto)
         return this.generateToken(user)
     }
@@ -44,9 +45,12 @@ export class AuthService {
         }
     }
 
-    private async validateUser(userDto: CreateUserDto) {
+    private async validateUser(userDto: LoginUserDto) {
         const { email } = userDto
         const user = await this.prisma.user.findUnique({where: {email}})
+        if(!user) {
+            throw new HttpException('User not found', HttpStatus.BAD_REQUEST)
+        }
         const passwordEquals = await bcrypt.compare(userDto.password, user.password)
 
         if(user && passwordEquals) {

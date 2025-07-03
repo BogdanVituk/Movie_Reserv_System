@@ -4,6 +4,7 @@ import { CreateSessionDto } from './dto/create-session.dto';
 import { SeatsService } from 'src/seats/seats.service';
 import { Booking, Seat, Session } from '@prisma/client';
 import { EmailService } from 'src/email/email.service';
+import { contains } from 'class-validator';
 
 interface SessionWithSeats {
     id: number;
@@ -78,6 +79,15 @@ export class SessionsService {
         })
     }
 
+    async getSessionbyFilmdId(id: number) {
+        return await this.prisma.session.findMany({
+            where: {id},
+            include: {
+                seats: true
+            }
+        })
+    }
+
     async checkSessionAndSendEmails() {
         const now = new Date()
         const oneDayLater = new Date(now.getTime() + 24* 60* 60 * 1000)
@@ -113,5 +123,25 @@ export class SessionsService {
                 )
             }
         }
+    }
+
+    async getSessionbyNameOrDate(filmName: string, date: string) {
+       const session = await this.prisma.session.findMany({
+            where: {
+                AND: [
+                    filmName ? {film: {name: {contains: filmName}}} : {},
+                    date ? {
+                        startTime: {
+                            gte: new Date(date + 'T00:00:00'),
+                            lt: new Date(date + 'T23:59:59')
+                        }
+                    } : {}
+                ]
+            },
+                include: {
+                    film: true
+                }
+        })
+        return session;
     }
 }
